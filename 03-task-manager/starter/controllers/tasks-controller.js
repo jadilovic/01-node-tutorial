@@ -9,15 +9,12 @@ const getAllTasks = asyncWrapper(async (req, res) => {
 
 const createTask = asyncWrapper(async (req, res) => {
 	const task = await Task.create(req.body);
-	console.log(task);
 	res.status(201).json(task);
 });
 
 const getTask = asyncWrapper(async (req, res, next) => {
 	const { id: taskID } = req.params;
 	const oneTask = await Task.findOne({ _id: taskID });
-	console.log('controller');
-	console.log(oneTask);
 	if (!oneTask) {
 		return next(
 			createCustomError(`No task with the specified id ${taskID} found`, 404)
